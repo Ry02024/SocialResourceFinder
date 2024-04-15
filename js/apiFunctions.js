@@ -21,7 +21,7 @@ export async function embedFn(text, model, api) {
             'Authorization': `Bearer ${api}`
         },
         body: JSON.stringify({ model: model, content: text, taskType: "retrieval_document" })
-    });
+    };
     const data = await response.json();
     return data.embedding;
 }

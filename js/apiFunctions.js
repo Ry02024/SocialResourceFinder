@@ -1,3 +1,5 @@
+import { GoogleGenerativeAI } from "@google/generative-ai";
+
 // 文書データを取得する関数
 export function getDocuments() {
     return [
@@ -12,7 +14,7 @@ export function getDocuments() {
 
 // テキストの埋め込みを取得する関数
 export async function embedFn(text, model, api) {
-    const response = await fetch('https://your-api-endpoint.com/embed', {
+    const response = await {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

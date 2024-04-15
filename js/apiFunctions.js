@@ -10,3 +10,16 @@ export function getDocuments() {
     ];
 }
 
+// テキストの埋め込みを取得する関数
+export async function embedFn(text, model, api) {
+    const response = await fetch('https://your-api-endpoint.com/embed', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${api}`
+        },
+        body: JSON.stringify({ model: model, content: text, taskType: "retrieval_document" })
+    });
+    const data = await response.json();
+    return data.embedding;
+}

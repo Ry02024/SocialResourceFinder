@@ -1,5 +1,5 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import { getDocuments } from './apiFunctions.js'; // apiFunctions.jsからgetDocumentsをインポート
+import { getDocuments, embedFn} from './apiFunctions.js'; // apiFunctions.jsからgetDocumentsをインポート
 
 // DOMが読み込まれたら実行される関数
 document.addEventListener('DOMContentLoaded', () => {
@@ -7,10 +7,16 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // 文書データを画面に表示する関数
-function displayDocuments() {
+async function displayDocuments() {
   const documents = getDocuments();
-  const outputElement = document.getElementById('output'); // HTML内の出力用の要素を取得
-  outputElement.innerHTML = documents.map(doc => `<p>${doc}</p>`).join(''); // 文書データをHTMLに挿入
+  const outputElement = document.getElementById('output');
+  outputElement.innerHTML = ''; // 既存の内容をクリア
+
+  for (let doc of documents) {
+    const embedding = await embedFn(doc, 'your-model-name', 'your-api-key'); // ベクトルデータを取得
+    const vectorDisplay = embedding.join(', '); // ベクトルデータを文字列に変換
+    outputElement.innerHTML += `<p>${vectorDisplay}</p>`; // 文字列をHTMLに挿入
+  }
 }
 
 async function run() {
